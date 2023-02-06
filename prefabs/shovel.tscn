@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://b4todnj8aqgrf"]
+
+[ext_resource type="Texture2D" uid="uid://dus6tewfhu7ti" path="res://textures/poolrooms_tiles_default.png" id="1_fe02r"]
+[ext_resource type="Texture2D" uid="uid://do18p8b6m4ne0" path="res://textures/metal_default.png" id="2_gwdnv"]
+[ext_resource type="Texture2D" uid="uid://se5ulrxr8rrd" path="res://textures/shale_side.png" id="3_s5xnr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3fdke"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3pul"]
+diffuse_mode = 3
+albedo_texture = ExtResource("1_fe02r")
+uv1_scale = Vector3(3, 2, 3)
+texture_filter = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_cj56p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_beprh"]
+diffuse_mode = 3
+albedo_texture = ExtResource("2_gwdnv")
+uv1_scale = Vector3(3, 2, 3)
+texture_filter = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tkgbp"]
+diffuse_mode = 3
+albedo_texture = ExtResource("3_s5xnr")
+uv1_scale = Vector3(3, 2, 3)
+texture_filter = 2
+
+[node name="Shovel" type="RigidBody3D" groups=["grabable"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.210715, 0, 0, 0, 0.126501, 0, 0, 0, 1.55496, 0, 0, 0.114008)
+shape = SubResource("BoxShape3D_3fdke")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.210715, 0, 0, 0, 0.126501, 0, 0, 0, 1.55496, 0, 0, 0.114008)
+material_override = SubResource("StandardMaterial3D_k3pul")
+mesh = SubResource("BoxMesh_cj56p")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.532121, 0, 0, 0, 0.183551, 0, 0, 0, 0.773171, 0, 0, 1.21075)
+shape = SubResource("BoxShape3D_3fdke")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.532121, 0, 0, 0, 0.183551, 0, 0, 0, 0.773171, 0, 0, 1.21075)
+material_override = SubResource("StandardMaterial3D_beprh")
+mesh = SubResource("BoxMesh_cj56p")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.532121, 0, 0, 0, 0.175576, 0, 0, 0, 0.156333, 0, 0, -0.708331)
+shape = SubResource("BoxShape3D_3fdke")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.532121, 0, 0, 0, 0.175576, 0, 0, 0, 0.156333, 0, 0, -0.708331)
+material_override = SubResource("StandardMaterial3D_tkgbp")
+mesh = SubResource("BoxMesh_cj56p")
+skeleton = NodePath("../CollisionShape3D")

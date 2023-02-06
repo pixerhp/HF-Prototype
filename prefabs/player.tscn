@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://3mxgjucv2auv"]
+
+[ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_luo61"]
+[ext_resource type="PackedScene" uid="uid://b8x7cffwumk6c" path="res://prefabs/arm.tscn" id="3_0uh66"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jcsa2"]
+
+[node name="Player" type="CharacterBody3D"]
+floor_max_angle = 1.39626
+script = ExtResource("1_luo61")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_jcsa2")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="LeftArm" parent="Camera3D" instance=ExtResource("3_0uh66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, 0)
+metadata/MirrorInMirrorMode = true
+metadata/MainAction = "left_click"
+
+[node name="RightArm" parent="Camera3D" instance=ExtResource("3_0uh66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 0)
+metadata/MainAction = "right_click"

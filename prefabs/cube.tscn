@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy1xwxr68tom8"]
+
+[ext_resource type="Texture2D" uid="uid://db7ytuva53tl1" path="res://textures/unknown_block_default.png" id="1_t75ux"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w286a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r55to"]
+diffuse_mode = 3
+albedo_texture = ExtResource("1_t75ux")
+uv1_scale = Vector3(3, 2, 3)
+texture_filter = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3kcq"]
+
+[node name="Cube" type="RigidBody3D" groups=["grabable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 23.1397, -2)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_w286a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_r55to")
+mesh = SubResource("BoxMesh_i3kcq")
+skeleton = NodePath("../CollisionShape3D")
