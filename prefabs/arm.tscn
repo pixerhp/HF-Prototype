@@ -5,10 +5,14 @@
 [node name="Arm" type="Node3D"]
 metadata/MirrorInMirrorMode = false
 metadata/ReturningHome = false
+metadata/hand_index = 0
 
 [node name="Hand" parent="." instance=ExtResource("1_fy66j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
 metadata/MainAction = "toggle_ui"
 
 [node name="ReturnTimer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="HandDestination" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)

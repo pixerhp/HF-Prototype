@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3t5brhy484yq"]
+[gd_scene load_steps=6 format=3 uid="uid://c3t5brhy484yq"]
 
 [ext_resource type="Texture2D" uid="uid://co8pd38rb8874" path="res://textures/ladder_brassish_side.png" id="1_as2yr"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1dr7d"]
-size = Vector3(0.3, 0.2, 0.3)
+[sub_resource type="BoxShape3D" id="BoxShape3D_qabtq"]
+size = Vector3(0.25, 0.1, 0.25)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vm6nm"]
 diffuse_mode = 3
@@ -14,17 +14,19 @@ texture_filter = 2
 [sub_resource type="BoxMesh" id="BoxMesh_ruoda"]
 size = Vector3(0.25, 0.1, 0.25)
 
-[node name="Hand" type="CharacterBody3D"]
-collision_layer = 0
-collision_mask = 0
+[sub_resource type="BoxShape3D" id="BoxShape3D_1dr7d"]
+size = Vector3(0.3, 0.2, 0.3)
+
+[node name="Hand" type="CharacterBody3D" groups=["hand"]]
 motion_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_1dr7d")
+shape = SubResource("BoxShape3D_qabtq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_vm6nm")
 mesh = SubResource("BoxMesh_ruoda")
+skeleton = NodePath("")
 
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="."]
 node_a = NodePath("..")
