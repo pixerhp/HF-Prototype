@@ -1,9 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://3mxgjucv2auv"]
+[gd_scene load_steps=7 format=3 uid="uid://3mxgjucv2auv"]
 
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_luo61"]
 [ext_resource type="PackedScene" uid="uid://b8x7cffwumk6c" path="res://prefabs/arm.tscn" id="3_0uh66"]
+[ext_resource type="Script" path="res://scripts/network_data.gd" id="3_j08hf"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jcsa2"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evr2n"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xfjnf"]
+properties/0/path = NodePath(".:puppet_position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:puppet_velocity")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:puppet_rotation")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(".:puppet_hand_positions")
+properties/3/spawn = true
+properties/3/sync = true
+properties/4/path = NodePath(".:puppet_hand_rotations")
+properties/4/spawn = true
+properties/4/sync = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_em6tn"]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
@@ -12,7 +32,7 @@ floor_max_angle = 1.39626
 script = ExtResource("1_luo61")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_jcsa2")
+shape = SubResource("CapsuleShape3D_evr2n")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -25,3 +45,14 @@ metadata/MainAction = "left_click"
 [node name="RightArm" parent="Camera3D" instance=ExtResource("3_0uh66")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 0)
 metadata/MainAction = "right_click"
+
+[node name="NetworkData" type="Node" parent="."]
+script = ExtResource("3_j08hf")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../NetworkData")
+replication_config = SubResource("SceneReplicationConfig_xfjnf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_em6tn")

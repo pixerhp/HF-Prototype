@@ -1,14 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://1kvwgihomkc7"]
+[gd_scene load_steps=10 format=3 uid="uid://1kvwgihomkc7"]
 
-[ext_resource type="PackedScene" uid="uid://3mxgjucv2auv" path="res://prefabs/player.tscn" id="1_r4wbl"]
-[ext_resource type="Script" path="res://scripts/world_gen.gd" id="2_hsqsr"]
-[ext_resource type="Texture2D" uid="uid://d3wg8nm3punrv" path="res://textures/grassy_default.png" id="3_7tbe1"]
-[ext_resource type="PackedScene" uid="uid://dy1xwxr68tom8" path="res://prefabs/cube.tscn" id="4_qlpug"]
-[ext_resource type="Texture2D" uid="uid://cs5dxrf6dec2n" path="res://textures/asremic2.png" id="5_qm043"]
-[ext_resource type="PackedScene" uid="uid://b4todnj8aqgrf" path="res://prefabs/shovel.tscn" id="5_xpx18"]
-[ext_resource type="Texture2D" uid="uid://dy3y5c36ndxom" path="res://textures/cobble_default.png" id="6_nckme"]
-[ext_resource type="Texture2D" uid="uid://dus6tewfhu7ti" path="res://textures/poolrooms_tiles_default.png" id="7_drg0s"]
-[ext_resource type="Texture2D" uid="uid://c61v6odafs5ux" path="res://textures/stone_tile_default.png" id="9_5s7h0"]
+[ext_resource type="StyleBox" uid="uid://cks2su2mb6q4t" path="res://style_box.tres" id="4_bt4mb"]
+[ext_resource type="StyleBox" uid="uid://cfbxtg7am8uvk" path="res://focus_style_box_flat.tres" id="5_yjtdm"]
+[ext_resource type="StyleBox" uid="uid://d4mirw6xitiuj" path="res://hover_style_box_flat.tres" id="6_rib3e"]
+[ext_resource type="StyleBox" uid="uid://bf8hvtjd0n21p" path="res://clicked_style_box.tres" id="7_bobtk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d063o"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,172 +15,65 @@ sky_material = SubResource("ProceduralSkyMaterial_d063o")
 [sub_resource type="Environment" id="Environment_8a6fv"]
 background_mode = 2
 sky = SubResource("Sky_iwc4w")
+ambient_light_sky_contribution = 0.1
 tonemap_mode = 2
-glow_enabled = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_s2gj8"]
-noise_type = 3
+[sub_resource type="Gradient" id="Gradient_wck6y"]
+offsets = PackedFloat32Array(0, 0.990654)
+colors = PackedColorArray(0.529067, 0.529067, 0.529067, 1, 0.414704, 0.414704, 0.414704, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_25gux"]
-diffuse_mode = 3
-albedo_texture = ExtResource("3_7tbe1")
-uv1_triplanar = true
-uv1_world_triplanar = true
-uv2_triplanar = true
-uv2_world_triplanar = true
-texture_filter = 2
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_6tunv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3wu5t"]
-diffuse_mode = 3
-albedo_texture = ExtResource("5_qm043")
-uv1_scale = Vector3(4, 2, 4)
-texture_filter = 0
-
-[sub_resource type="SphereMesh" id="SphereMesh_x3a1g"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_ayce5"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l2u58"]
-diffuse_mode = 3
-albedo_texture = ExtResource("6_nckme")
-uv1_scale = Vector3(4, 2, 4)
-texture_filter = 0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_ydw81"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xk3cg"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_svorr"]
-diffuse_mode = 3
-albedo_texture = ExtResource("7_drg0s")
-uv1_scale = Vector3(4, 2, 4)
-texture_filter = 0
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fcrgb"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ald1"]
-bg_color = Color(0, 0, 0, 1)
-skew = Vector2(-0.5, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 1, 0, 1)
-border_blend = true
-corner_radius_top_right = 5
-corner_radius_bottom_left = 5
-expand_margin_left = 4.0
-expand_margin_right = 4.0
-shadow_size = 1
-shadow_offset = Vector2(4, 4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_tyia8"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_icp1p"]
-diffuse_mode = 3
-albedo_texture = ExtResource("9_5s7h0")
-uv1_triplanar = true
-uv1_world_triplanar = true
-texture_filter = 2
-
-[sub_resource type="BoxMesh" id="BoxMesh_q67x8"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tq8v0"]
+gradient = SubResource("Gradient_wck6y")
+width = 256
+height = 256
+fill_to = Vector2(1, 0.549858)
 
 [node name="World" type="Node3D"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+directional_shadow_fade_start = 0.75
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8a6fv")
 
-[node name="Player" parent="." instance=ExtResource("1_r4wbl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23, 0)
+[node name="SpeedometerCanvas" type="CanvasLayer" parent="."]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("2_hsqsr")
-noise = SubResource("FastNoiseLite_s2gj8")
+[node name="Label" type="Label" parent="SpeedometerCanvas"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -52.0
+offset_right = 67.0
+offset_bottom = -26.0
+grow_vertical = 0
+theme_override_styles/normal = ExtResource("4_bt4mb")
+text = "0 speed"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="Label2" type="Label" parent="SpeedometerCanvas"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -96.0
+offset_right = 88.0
+offset_bottom = -66.0
+grow_vertical = 0
+theme_override_styles/normal = ExtResource("4_bt4mb")
+text = "(0, 0, 0)"
+horizontal_alignment = 1
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_25gux")
-
-[node name="Cube" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 34.1397, -2)
-
-[node name="Cube2" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 35.1397, -3)
-
-[node name="Cube3" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 34.1397, -4)
-
-[node name="Cube4" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 34.1397, -4)
-
-[node name="Cube5" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 34.1397, -4)
-
-[node name="Cube6" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 34.1397, -3)
-
-[node name="Cube7" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 34.1397, -3)
-
-[node name="Cube8" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 34.1397, -3)
-
-[node name="Cube9" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 34.1397, -2)
-
-[node name="Cube10" parent="." instance=ExtResource("4_qlpug")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 34.1397, -2)
-
-[node name="Sphere" type="RigidBody3D" parent="." groups=["grabable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 36.1397, -3)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Sphere"]
-shape = SubResource("SphereShape3D_6tunv")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Sphere"]
-material_override = SubResource("StandardMaterial3D_3wu5t")
-mesh = SubResource("SphereMesh_x3a1g")
-skeleton = NodePath("../CollisionShape3D")
-
-[node name="Cylinder" type="RigidBody3D" parent="." groups=["grabable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 32.6397, -3)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Cylinder"]
-shape = SubResource("CylinderShape3D_ayce5")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinder"]
-material_override = SubResource("StandardMaterial3D_l2u58")
-mesh = SubResource("CylinderMesh_ydw81")
-skeleton = NodePath("../CollisionShape3D")
-
-[node name="Capsule" type="RigidBody3D" parent="." groups=["grabable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 30.6397, -3)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Capsule"]
-shape = SubResource("CapsuleShape3D_xk3cg")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Capsule"]
-material_override = SubResource("StandardMaterial3D_svorr")
-mesh = SubResource("CapsuleMesh_fcrgb")
-skeleton = NodePath("../CollisionShape3D")
-
-[node name="Shovel" parent="." instance=ExtResource("5_xpx18")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 35.1891, -6.98685)
+[node name="MirrorLine" type="ColorRect" parent="SpeedometerCanvas"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2.0
+offset_right = 2.0
+offset_bottom = 8000.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -201,7 +89,70 @@ Press double click to toggle grabbing
 Press R  to swap Y and Z movement for the hands
 Press the middle mouse button to toggle mirror hand mode
 Press F1 to toggle this menu
-Press F2 to reload game"
+Press F2 to teleport to (0, 50, 0)
+Press F3 to spawn a shovel"
+
+[node name="NetworkMenu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/NetworkMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_tq8v0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/NetworkMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -68.0
+offset_right = 47.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IP" type="LineEdit" parent="CanvasLayer/NetworkMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("4_bt4mb")
+theme_override_styles/focus = ExtResource("5_yjtdm")
+text = "127.0.0.1"
+placeholder_text = "IP Address"
+
+[node name="HostButton" type="Button" parent="CanvasLayer/NetworkMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("4_bt4mb")
+theme_override_styles/hover = ExtResource("6_rib3e")
+theme_override_styles/pressed = ExtResource("7_bobtk")
+theme_override_styles/focus = ExtResource("5_yjtdm")
+text = "Host Game"
+
+[node name="ClientButton" type="Button" parent="CanvasLayer/NetworkMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("4_bt4mb")
+theme_override_styles/hover = ExtResource("6_rib3e")
+theme_override_styles/pressed = ExtResource("7_bobtk")
+theme_override_styles/focus = ExtResource("5_yjtdm")
+text = "Join Game"
+
+[node name="ServerButton" type="Button" parent="CanvasLayer/NetworkMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("4_bt4mb")
+theme_override_styles/hover = ExtResource("6_rib3e")
+theme_override_styles/pressed = ExtResource("7_bobtk")
+theme_override_styles/focus = ExtResource("5_yjtdm")
+text = "Run Server"
 
 [node name="VersionLabel" type="Label" parent="CanvasLayer"]
 anchors_preset = 3
@@ -209,69 +160,20 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -100.0
+offset_left = -136.0
 offset_top = -26.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Unknown version"
 
-[node name="SpeedometerCanvas" type="CanvasLayer" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://prefabs/player.tscn", "res://prefabs/shovel.tscn")
+spawn_path = NodePath("../NetworkObjects")
 
-[node name="Label" type="Label" parent="SpeedometerCanvas"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -52.0
-offset_right = 67.0
-offset_bottom = -26.0
-grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_6ald1")
-text = "0 speed"
+[node name="NetworkObjects" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
-[node name="MirrorLine" type="ColorRect" parent="SpeedometerCanvas"]
-visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -2.0
-offset_right = 2.0
-offset_bottom = 8000.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 1)
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.941272, -0.309138, -0.1358, -0.325084, 0.721011, 0.611935, -0.0912591, 0.620143, -0.779163, 0, 209.792, -156.655)
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="." groups=["grabable"]]
-transform = Transform3D(332.083, 0, 0, 0, 1, 0, 0, 0, 333.956, 0, 0, 199)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-shape = SubResource("BoxShape3D_tyia8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
-material_override = SubResource("StandardMaterial3D_icp1p")
-mesh = SubResource("BoxMesh_q67x8")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="." groups=["grabable"]]
-transform = Transform3D(282.836, 0, 0, 0, 2.44593, 0, 0, 0, 302.451, -2.77076, 1.49456, 200.594)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
-shape = SubResource("BoxShape3D_tyia8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3"]
-material_override = SubResource("StandardMaterial3D_icp1p")
-mesh = SubResource("BoxMesh_q67x8")
-
-[node name="StaticBody3D4" type="StaticBody3D" parent="." groups=["grabable"]]
-transform = Transform3D(230.984, 0, 0, 0, 2.44593, 0, 0, 0, 260.356, -2.771, 3.64626, 200.594)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
-shape = SubResource("BoxShape3D_tyia8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D4"]
-material_override = SubResource("StandardMaterial3D_icp1p")
-mesh = SubResource("BoxMesh_q67x8")
+[node name="Chunks" type="Node3D" parent="."]

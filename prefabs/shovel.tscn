@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4todnj8aqgrf"]
+[gd_scene load_steps=10 format=3 uid="uid://b4todnj8aqgrf"]
 
 [ext_resource type="Texture2D" uid="uid://dus6tewfhu7ti" path="res://textures/poolrooms_tiles_default.png" id="1_fe02r"]
 [ext_resource type="Texture2D" uid="uid://do18p8b6m4ne0" path="res://textures/metal_default.png" id="2_gwdnv"]
@@ -25,6 +25,20 @@ diffuse_mode = 3
 albedo_texture = ExtResource("3_s5xnr")
 uv1_scale = Vector3(3, 2, 3)
 texture_filter = 2
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qria6"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:linear_velocity")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath(".:angular_velocity")
+properties/3/spawn = true
+properties/3/sync = true
 
 [node name="Shovel" type="RigidBody3D" groups=["grabable"]]
 collision_layer = 3
@@ -59,3 +73,6 @@ transform = Transform3D(0.532121, 0, 0, 0, 0.175576, 0, 0, 0, 0.156333, 0, 0, -0
 material_override = SubResource("StandardMaterial3D_tkgbp")
 mesh = SubResource("BoxMesh_cj56p")
 skeleton = NodePath("../CollisionShape3D")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qria6")

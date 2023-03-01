@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6yknemt41m"]
+
+[ext_resource type="Texture2D" uid="uid://c61v6odafs5ux" path="res://textures/stone_tile_default.png" id="1_2p8fp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tyia8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_icp1p"]
+diffuse_mode = 3
+albedo_texture = ExtResource("1_2p8fp")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_q67x8"]
+
+[node name="Steps" type="Node3D"]
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." groups=["grabable"]]
+transform = Transform3D(332.083, 0, 0, 0, 1, 0, 0, 0, 333.956, 0, 0, 199)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_tyia8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+material_override = SubResource("StandardMaterial3D_icp1p")
+mesh = SubResource("BoxMesh_q67x8")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="." groups=["grabable"]]
+transform = Transform3D(282.836, 0, 0, 0, 2.44593, 0, 0, 0, 302.451, -2.77076, 1.49456, 200.594)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+shape = SubResource("BoxShape3D_tyia8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3"]
+material_override = SubResource("StandardMaterial3D_icp1p")
+mesh = SubResource("BoxMesh_q67x8")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="." groups=["grabable"]]
+transform = Transform3D(230.984, 0, 0, 0, 2.44593, 0, 0, 0, 260.356, -2.771, 3.64626, 200.594)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
+shape = SubResource("BoxShape3D_tyia8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D4"]
+material_override = SubResource("StandardMaterial3D_icp1p")
+mesh = SubResource("BoxMesh_q67x8")

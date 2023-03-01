@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfmj1cxhigt85"]
+
+[ext_resource type="Script" path="res://scripts/chunk.gd" id="1_i5d24"]
+[ext_resource type="Texture2D" uid="uid://d3wg8nm3punrv" path="res://textures/grassy_default.png" id="2_80bnd"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1s3gs"]
+noise_type = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ks0v7"]
+albedo_texture = ExtResource("2_80bnd")
+metallic_specular = 0.0
+uv1_world_triplanar = true
+texture_filter = 2
+
+[node name="Chunk" type="StaticBody3D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_i5d24")
+noise = SubResource("FastNoiseLite_1s3gs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ks0v7")
