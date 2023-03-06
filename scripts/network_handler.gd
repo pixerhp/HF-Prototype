@@ -10,7 +10,9 @@ var shovel_id: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	version_label.text = "Version " + FileAccess.open("res://build/version.txt", FileAccess.READ).get_as_text()
+	var version_file := FileAccess.open("res://version.txt", FileAccess.READ)
+	if version_file:
+		version_label.text = "Version " + version_file.get_as_text()
 	network_menu.get_node("VBoxContainer/HostButton").connect("pressed", start_host)
 	network_menu.get_node("VBoxContainer/ServerButton").connect("pressed", start_server)
 	network_menu.get_node("VBoxContainer/ClientButton").connect("pressed", start_client)
