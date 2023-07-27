@@ -42,7 +42,7 @@ func _ready() -> void:
 		return
 	
 	$Camera3D.current = true
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED_HIDDEN
 	
 	arms[0].set_meta("MirrorInMirrorMode", not left_handed)
 	arms[1].set_meta("MirrorInMirrorMode", left_handed)
