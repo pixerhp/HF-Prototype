@@ -119,7 +119,7 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 	
 	var mesh: ConcavePolygonShape3D = ConcavePolygonShape3D.new()
 	mesh.set_faces(vertices)
-	$CollisionShape3D.shape = mesh
+	call_thread_safe("set_collision_shape", mesh)
 	
 	if vertices.size() < 3:
 		return
@@ -133,4 +133,10 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 
 	# Create the Mesh.
 	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	call_thread_safe("set_render_mesh", arr_mesh)
+
+func set_collision_shape(mesh: ConcavePolygonShape3D):
+	$CollisionShape3D.shape = mesh
+
+func set_render_mesh(arr_mesh: ArrayMesh):
 	$MeshInstance3D.mesh = arr_mesh
