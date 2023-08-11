@@ -10,11 +10,11 @@ config_version=5
 
 [application]
 
-config/name="Hatchetflare Proto. 13"
-config/description="A gameplay and terrain oriented prototype for the game Hatchetflare."
+config/name="HF Proto. v14"
+config/description="A gameplay and terrain oriented prototype for a game named \"Hatchetflair\"."
 run/main_scene="res://world.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://textures/texture_a.png"
 
 [autoload]
 
