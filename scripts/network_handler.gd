@@ -2,8 +2,8 @@ extends Node
 
 var player_prefab: PackedScene = preload("res://prefabs/player.tscn")
 @onready var networked_objects_holder: Node = get_tree().current_scene.get_node("NetworkObjects")
-@onready var network_menu: Node = get_tree().current_scene.get_node("CanvasLayer/NetworkMenu")
-@onready var version_label: Label = get_tree().current_scene.get_node("CanvasLayer/VersionLabel")
+@onready var network_menu: Node = get_tree().current_scene.get_node("MenuCanvas/NetworkMenu")
+@onready var version_label: Label = get_tree().current_scene.get_node("MenuCanvas/VersionLabel")
 
 var ip: String = "192.168.1.206"
 var shovel_id: int = 0

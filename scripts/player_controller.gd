@@ -125,10 +125,10 @@ func _physics_process(delta: float) -> void:
 		rotation = Vector3.ZERO
 	
 	if Input.is_action_just_pressed("toggle_ui"):
-		$"../../CanvasLayer".visible = not $"../../CanvasLayer".visible
+		$"../../MenuCanvas".visible = not $"../../MenuCanvas".visible
 	
-	$"../../SpeedometerCanvas/Label".text = str(int(velocity.length())) + " speed"
-	$"../../SpeedometerCanvas/Label2".text = str(Vector3i(global_position))
+	$"../../StatsCanvas/Coordinates".text = str(Vector3i(global_position))
+	$"../../StatsCanvas/Speedometer".text = str(int(velocity.length())) + " speed"
 
 func update_hands() -> void:
 	for arm in arms:
@@ -157,7 +157,7 @@ func update_hands() -> void:
 	
 	if Input.is_action_just_pressed("toggle_mirror_mode"):
 		mirror_mode = not mirror_mode
-		$"../../SpeedometerCanvas/MirrorLine".visible = mirror_mode
+		$"../../GameUI/MirrorLine".visible = mirror_mode
 	
 	if Input.is_action_just_pressed("toggle_hand_y_z_swap"):
 		hand_swap_y_z = not hand_swap_y_z
