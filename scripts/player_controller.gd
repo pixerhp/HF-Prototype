@@ -295,6 +295,8 @@ func chat_submit(chat: String):
 	chatbox.visible = false
 	handling_chat = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if chat.length() == 0:
+		return
 	if chat[0] == "/":
 		handle_command(chat.substr(1))
 	else:
