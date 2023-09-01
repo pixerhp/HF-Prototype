@@ -48,14 +48,21 @@ func load_world_around_player(player_position: Vector3):
 ##			print("Cleaned up: " + str(chunk))
 #			generation_queue.erase(chunk)
 	var chunks_around: Array[Vector3i] = [
-		Vector3i(1, 0, 0),
-		Vector3i(0, 1, 0),
-		Vector3i(0, 0, 1),
-		Vector3i(-1, 0, 0),
-		Vector3i(0,-1, 0),
-		Vector3i(0, 0,-1),
-		Vector3i(0, 0, 0)
+		#Vector3i(1, 0, 0),
+		#Vector3i(0, 1, 0),
+		#Vector3i(0, 0, 1),
+		#Vector3i(-1, 0, 0),
+		#Vector3i(0,-1, 0),
+		#Vector3i(0, 0,-1),
+		#Vector3i(0, 0, 0)
 	]
+	
+	for x in range(-2, 3):
+		for z in range(-2, 3):
+			for y in range(-2, 3):
+				chunks_around.append(Vector3i(x, y, z))
+	chunks_around.append(Vector3i(0, 0, 0))
+	
 	for chunk in chunks_around:
 		generate_chunk(player_position_integer + chunk)
 

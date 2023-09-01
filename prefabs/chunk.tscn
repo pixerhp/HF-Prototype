@@ -8,6 +8,7 @@ noise_type = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wqlx2"]
 albedo_texture = ExtResource("2_74x28")
+metallic_specular = 0.0
 texture_filter = 2
 
 [node name="Chunk" type="StaticBody3D"]

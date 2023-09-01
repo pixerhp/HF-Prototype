@@ -14,11 +14,21 @@ func ground_level_at(x, z) -> float:
 	return abs(noise.get_noise_2d(x, z)) * 20 + 35
 
 func get_value_at(x, y, z) -> float:
+	var d: int = 2
+	
+	if x < d and x > -d and y < 44 + d * 2 and y > 44 and z < d and z > -d:
+		return 1.0
+	if Vector3i(x, y, z) == Vector3i(8, 44, 8):
+		return 1.0
+	
 	var result: float = ground_level_at(x, z) - y
 	if result > 1.0:
-		result = noise.get_noise_3d(x * 0.1, y * 0.1, z * 0.1) * 10
-	return clampf(result, 0.0, 1.0)
-	#return clampf(noise.get_noise_3d(x, y, z) if y < ground_level_at(x, z) else (abs(ground_level_at(x, z) - y) if ground_level_at(x, z) - y > -1 else 0.0), 0.0, 1.0)
+		result = noise.get_noise_3d(x * 10, y * 10, z * 10) * 10
+	if result > 0.5:
+		return 1.0
+	if result > 0.0:
+		return 0.5
+	return 0.0
 
 func eval_voxels(a: float, b: float) -> float:
 	if abs(a) > THRESHOLD and abs(b) > THRESHOLD or (abs(a) < THRESHOLD and abs(b) < THRESHOLD):
@@ -78,16 +88,26 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 		Vector2(0.0, 0.0), # 11
 	]
 	
-	for x_loop in range(0, CHUNK_SIZE, 1):
+	var data: Array = []
+	
+	for x_loop in range(0, CHUNK_SIZE + 1, 1):
 		var x: float = chunk_position.x * CHUNK_SIZE + x_loop
-		for y_loop in range(0, CHUNK_SIZE, 1):
+		var layer_y: Array = []
+		for y_loop in range(0, CHUNK_SIZE + 1, 1):
 			var y: float = chunk_position.y * CHUNK_SIZE + y_loop
-			var tmp_z: float = chunk_position.z * CHUNK_SIZE
-			var prev_layer: Array[float] = [get_value_at(x, y, tmp_z), get_value_at(x + 1, y, tmp_z), get_value_at(x, y + 1, tmp_z), get_value_at(x + 1, y + 1, tmp_z)]
-			for z_loop in range(0, CHUNK_SIZE, 1):
+			var layer_z: Array[float] = []
+			for z_loop in range(0, CHUNK_SIZE + 1, 1):
 				var z: float = chunk_position.z * CHUNK_SIZE + z_loop
+				layer_z.append(get_value_at(x, y, z))
+			layer_y.append(layer_z)
+		data.append(layer_y)
+	
+	for x_loop in range(0, CHUNK_SIZE, 1):
+		for y_loop in range(0, CHUNK_SIZE, 1):
+			var prev_layer: Array[float] = [data[x_loop][y_loop][0], data[x_loop + 1][y_loop][0], data[x_loop][y_loop + 1][0], data[x_loop + 1][y_loop + 1][0]]
+			for z_loop in range(0, CHUNK_SIZE, 1):
 				var corners: Array[float] = [prev_layer[0], prev_layer[1], prev_layer[2], prev_layer[3], 
-										get_value_at(x, y, z + 1), get_value_at(x + 1, y, z + 1), get_value_at(x, y + 1, z + 1), get_value_at(x + 1, y + 1, z + 1)]
+										data[x_loop][y_loop][z_loop + 1], data[x_loop + 1][y_loop][z_loop + 1], data[x_loop][y_loop + 1][z_loop + 1], data[x_loop + 1][y_loop + 1][z_loop + 1]]
 				prev_layer[0] = corners[4]
 				prev_layer[1] = corners[5]
 				prev_layer[2] = corners[6]
