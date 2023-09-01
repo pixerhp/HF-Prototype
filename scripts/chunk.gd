@@ -74,18 +74,13 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 	]
 	
 	var base_uvs: Array[Vector2] = [
-		Vector2(0, 1.0), # 0
-		Vector2(1.0, 0), # 1
-		Vector2(0, 0.0), # 2
-		Vector2(0.0, 0), # 3
-		Vector2(0.5, 1.0), # 4
-		Vector2(1.0, 0.5), # 5
-		Vector2(0.5, 0.0), # 6
-		Vector2(0.0, 0.5), # 7
-		Vector2(0.0, 1.0), # 8
-		Vector2(1.0, 1.0), # 9
-		Vector2(1.0, 0.0), # 10
-		Vector2(0.0, 0.0), # 11
+		Vector2(0, 0), # 0
+		Vector2(1, 0), # 1
+		Vector2(0, 1), # 2
+		
+		Vector2(0, 1), # 3
+		Vector2(1, 0), # 4
+		Vector2(1, 1), # 5
 	]
 	
 	var data: Array = []
@@ -138,7 +133,7 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 					
 					uvs.push_back(base_uvs[uv_index + 0])
 					uv_index += 1
-					uv_index %= 3
+					uv_index %= 6
 					
 					#uvs.push_back(base_uvs[index])
 #					normals.push_back(Vector3.UP)
