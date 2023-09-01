@@ -11,7 +11,7 @@ func _enter_tree() -> void:
 	position = chunk_position * CHUNK_SIZE
 
 func ground_level_at(x, z) -> float:
-	return abs(noise.get_noise_2d(x, z)) * 20 + 35
+	return abs(noise.get_noise_2d(x, z)) * 20
 
 func get_value_at(x, y, z) -> float:
 	var d: int = 2
@@ -21,13 +21,15 @@ func get_value_at(x, y, z) -> float:
 	if Vector3i(x, y, z) == Vector3i(8, 44, 8):
 		return 1.0
 	
-	var result: float = ground_level_at(x, z) - y
-	if result > 1.0:
-		result = noise.get_noise_3d(x * 10, y * 10, z * 10) * 10
+	var result: float = noise.get_noise_3d(x * 10, y * 10, z * 10) * 10
+	var ground_level: float = ground_level_at(x, z) + 35
+	
+	if y > ground_level:
+		result = 0.0
 	if result > 0.5:
 		return 1.0
 	if result > 0.0:
-		return 0.5
+		return 1.0
 	return 0.0
 
 func eval_voxels(a: float, b: float) -> float:
