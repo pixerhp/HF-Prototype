@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://co8pd38rb8874"
-path="res://.godot/imported/ladder_brassish_side.png-314ac360940c3617bb2d6bfec15fd42e.ctex"
+uid="uid://bkbsof0c5t7ha"
+path.s3tc="res://.godot/imported/texture.png-8fc0c94471e10c0098f5b9fc1969ee8d.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://textures/ladder_brassish_side.png"
-dest_files=["res://.godot/imported/ladder_brassish_side.png-314ac360940c3617bb2d6bfec15fd42e.ctex"]
+source_file="res://textures/texture.png"
+dest_files=["res://.godot/imported/texture.png-8fc0c94471e10c0098f5b9fc1969ee8d.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
