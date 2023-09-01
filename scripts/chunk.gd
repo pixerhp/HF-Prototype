@@ -16,18 +16,21 @@ func ground_level_at(x, z) -> float:
 func get_value_at(x, y, z) -> float:
 	var d: int = 2
 	
-	if x < d and x > -d and y < 44 + d * 2 and y > 44 and z < d and z > -d:
-		return 1.0
-	if Vector3i(x, y, z) == Vector3i(8, 44, 8):
-		return 1.0
+#	if x < d and x > -d and y < 44 + d * 2 and y > 44 and z < d and z > -d:
+#		return 1.0
+#	if Vector3i(x, y, z) == Vector3i(8, 44, 8):
+#		return 1.0
 	
-	var result: float = ground_level_at(x, z) - y
-	if result > 1.0:
-		result = noise.get_noise_3d(x * 10, y * 10, z * 10) * 10
+#	if sqrt((x*x) + ((y-16)*(y-16)) + (z*z)) < 16:
+#		return(1)
+	
+	var result: float = -y + x*y*z #ground_level_at(x, z) - y
+	if result >= 1.0:
+		result = noise.get_noise_3d(x*8, y*8, z*8)
 	if result > 0.5:
 		return 1.0
 	if result > 0.0:
-		return 0.5
+		return 1 #0.5
 	return 0.0
 
 func eval_voxels(a: float, b: float) -> float:

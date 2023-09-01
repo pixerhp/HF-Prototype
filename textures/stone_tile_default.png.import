@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c61v6odafs5ux"
-path.s3tc="res://.godot/imported/stone_tile_default.png-addef764854fb0c92bb36928bb5b3dd6.s3tc.ctex"
+path="res://.godot/imported/stone_tile_default.png-addef764854fb0c92bb36928bb5b3dd6.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://textures/stone_tile_default.png"
-dest_files=["res://.godot/imported/stone_tile_default.png-addef764854fb0c92bb36928bb5b3dd6.s3tc.ctex"]
+dest_files=["res://.godot/imported/stone_tile_default.png-addef764854fb0c92bb36928bb5b3dd6.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

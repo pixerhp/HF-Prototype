@@ -15,7 +15,7 @@ var mirror_mode: bool = false
 var hand_swap_y_z: bool = false
 var left_handed: bool = false
 
-var spawn_point: Vector3 = Vector3(8, 50, 8)
+var spawn_point: Vector3 = Vector3(0, 50, 0)
 @onready var arms: Array = [$Camera3D/LeftArm, $Camera3D/RightArm]
 var hands: Array = []
 
