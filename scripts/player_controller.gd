@@ -16,10 +16,15 @@ enum GRAB_MODE{ONLY_DROP, ONLY_GRAB, GRAB_OR_DROP}
 var mirror_mode: bool = false
 var hand_swap_y_z: bool = false
 var left_handed: bool = false
+var handling_chat: bool = false
 
 var spawn_point: Vector3 = Vector3(0, 50, 0)
 @onready var arms: Array = [$Camera3D/LeftArm, $Camera3D/RightArm]
 var hands: Array = []
+
+var flying: bool = false
+
+@onready var chatbox: LineEdit = get_tree().current_scene.get_node("ChatUI/ChatBox")
 
 func is_authority() -> bool:
 	if multiplayer.get_multiplayer_peer().get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
@@ -48,6 +53,7 @@ func _ready() -> void:
 	
 	arms[0].set_meta("MirrorInMirrorMode", not left_handed)
 	arms[1].set_meta("MirrorInMirrorMode", left_handed)
+	chatbox.text_submitted.connect(chat_submit)
 
 func make_hand(arm, hand_index):
 	if not multiplayer.get_unique_id() == 1:
@@ -75,16 +81,29 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 	
+	if Input.is_action_just_pressed("chat") and not chatbox.visible and not handling_chat:
+		chatbox.visible = not chatbox.visible
+		chatbox.grab_focus()
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if chatbox.visible else Input.MOUSE_MODE_CAPTURED
+	
+	if chatbox.visible:
+		return
+	
+	handling_chat = false
+	
 	if not WorldManager.is_spawn_chunk_generated():
 		return
 	
 	# Add the gravity.
-	if not is_on_floor():
+	if not is_on_floor() and not flying:
 		velocity.y -= gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_pressed("jump") and is_on_floor():
+	if Input.is_action_pressed("jump") and is_on_floor() and not flying:
 		velocity.y = JUMP_VELOCITY
+	
+	if flying:
+		velocity.y = SPEED * Input.get_axis("lower", "jump")
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -169,6 +188,9 @@ func _on_return_timer_timeout(arm: Node3D) -> void:
 
 func _input(event) -> void:
 	if not is_authority():
+		return
+	
+	if chatbox.visible:
 		return
 	
 	if event is InputEventMouseButton:
@@ -267,3 +289,31 @@ func grab_item(item_path, hand_index, is_grab: bool = true):
 			item.collision_layer = 3
 			item.collision_mask = 3
 		hand.get_node("Generic6DOFJoint3D").node_b = ""
+
+func chat_submit(chat: String):
+	chatbox.clear()
+	chatbox.visible = false
+	handling_chat = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if chat[0] == "/":
+		handle_command(chat.substr(1))
+	else:
+		print(chat)
+
+func handle_command(command: String):
+	var parameters := command.split(" ", false)
+	if parameters.size() == 0:
+		return
+	if parameters[0] == "tp":
+		if parameters.size() != 4:
+			print("Bad command usage")
+			return
+		var x: float = parameters[1].to_float()
+		var y: float = parameters[2].to_float()
+		var z: float = parameters[3].to_float()
+		global_position = Vector3(x, y, z)
+		velocity = Vector3.ZERO
+		rotation = Vector3.ZERO
+	if parameters[0] == "fly":
+		flying = not flying
+		print(flying)
