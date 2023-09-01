@@ -174,7 +174,7 @@ directional_shadow_fade_start = 0.75
 transform = Transform3D(-0.941272, -0.309138, -0.1358, -0.325084, 0.721011, 0.611935, -0.0912591, 0.620143, -0.779163, 0, 209.792, -156.655)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://prefabs/player.tscn", "res://prefabs/shovel.tscn")
+_spawnable_scenes = PackedStringArray("res://prefabs/player.tscn", "res://prefabs/shovel.tscn", "res://prefabs/hand.tscn")
 spawn_path = NodePath("../NetworkObjects")
 
 [node name="NetworkObjects" type="Node3D" parent="."]

@@ -10,18 +10,23 @@
 properties/0/path = NodePath(".:puppet_position")
 properties/0/spawn = true
 properties/0/sync = true
+properties/0/watch = false
 properties/1/path = NodePath(".:puppet_velocity")
 properties/1/spawn = true
 properties/1/sync = true
+properties/1/watch = false
 properties/2/path = NodePath(".:puppet_rotation")
 properties/2/spawn = true
 properties/2/sync = true
+properties/2/watch = false
 properties/3/path = NodePath(".:puppet_hand_positions")
 properties/3/spawn = true
 properties/3/sync = true
+properties/3/watch = false
 properties/4/path = NodePath(".:puppet_hand_rotations")
 properties/4/spawn = true
 properties/4/sync = true
+properties/4/watch = false
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_em6tn"]
 
@@ -51,6 +56,8 @@ script = ExtResource("3_j08hf")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("../NetworkData")
+replication_interval = 0.05
+delta_interval = 0.05
 replication_config = SubResource("SceneReplicationConfig_xfjnf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3t5brhy484yq"]
+[gd_scene load_steps=8 format=3 uid="uid://c3t5brhy484yq"]
 
 [ext_resource type="Texture2D" uid="uid://co8pd38rb8874" path="res://textures/ladder_brassish_side.png" id="1_as2yr"]
+[ext_resource type="Script" path="res://scripts/hand.gd" id="1_hnwrn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qabtq"]
 size = Vector3(0.25, 0.1, 0.25)
@@ -17,8 +18,19 @@ size = Vector3(0.25, 0.1, 0.25)
 [sub_resource type="BoxShape3D" id="BoxShape3D_1dr7d"]
 size = Vector3(0.3, 0.2, 0.3)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dbytl"]
+properties/0/path = NodePath(".:global_position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+properties/1/path = NodePath(".:global_rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/1/watch = false
+
 [node name="Hand" type="CharacterBody3D" groups=["hand"]]
 motion_mode = 1
+script = ExtResource("1_hnwrn")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_qabtq")
@@ -39,3 +51,7 @@ angular_spring_z/stiffness = 500.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_1dr7d")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.01
+replication_config = SubResource("SceneReplicationConfig_dbytl")

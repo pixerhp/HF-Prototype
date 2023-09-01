@@ -1,15 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8x7cffwumk6c"]
-
-[ext_resource type="PackedScene" uid="uid://c3t5brhy484yq" path="res://prefabs/hand.tscn" id="1_fy66j"]
+[gd_scene format=3 uid="uid://b8x7cffwumk6c"]
 
 [node name="Arm" type="Node3D"]
 metadata/MirrorInMirrorMode = false
 metadata/ReturningHome = false
 metadata/hand_index = 0
-
-[node name="Hand" parent="." instance=ExtResource("1_fy66j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
-metadata/MainAction = "toggle_ui"
 
 [node name="ReturnTimer" type="Timer" parent="."]
 wait_time = 3.0

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://buut0pa13rll0"
 path.s3tc="res://.godot/imported/black sand.png-91d4b2b1d53d01b498a15f81d2469172.s3tc.ctex"
+path.etc2="res://.godot/imported/black sand.png-91d4b2b1d53d01b498a15f81d2469172.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/black sand.png"
-dest_files=["res://.godot/imported/black sand.png-91d4b2b1d53d01b498a15f81d2469172.s3tc.ctex"]
+dest_files=["res://.godot/imported/black sand.png-91d4b2b1d53d01b498a15f81d2469172.s3tc.ctex", "res://.godot/imported/black sand.png-91d4b2b1d53d01b498a15f81d2469172.etc2.ctex"]
 
 [params]
 

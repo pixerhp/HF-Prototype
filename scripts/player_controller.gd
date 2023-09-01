@@ -11,6 +11,8 @@ extends CharacterBody3D
 
 enum GRAB_MODE{ONLY_DROP, ONLY_GRAB, GRAB_OR_DROP}
 
+@export var hand_prefab: PackedScene = preload("res://prefabs/hand.tscn")
+
 var mirror_mode: bool = false
 var hand_swap_y_z: bool = false
 var left_handed: bool = false
@@ -32,7 +34,7 @@ func _enter_tree():
 func _ready() -> void:
 	var hand_index: int = 0
 	for arm in arms:
-		move_hand.call_deferred(arm, hand_index)
+		make_hand.call_deferred(arm, hand_index)
 		arm.get_node("ReturnTimer").connect("timeout", _on_return_timer_timeout.bind(arm))
 		arm.set_meta("hand_index", hand_index)
 		hand_index += 1
@@ -47,20 +49,15 @@ func _ready() -> void:
 	arms[0].set_meta("MirrorInMirrorMode", not left_handed)
 	arms[1].set_meta("MirrorInMirrorMode", left_handed)
 
-var is_ready: bool = false
-
-func move_hand(arm, hand_index):
-	var hand = arm.get_node("Hand")
-	hands.append(hand)
-	hand.name = "hand" + str(hand_index)
-	arm.remove_child(hand)
+func make_hand(arm, hand_index):
+	if not multiplayer.get_unique_id() == 1:
+		return
+	var hand = hand_prefab.instantiate()
+	hand.name = str($NetworkData.get_multiplayer_authority()) + "Hand" + str(hand_index)
 	get_parent().add_child(hand)
-	hand.set_owner(get_parent())
-	hand.global_position = arm.get_node("HandDestination").global_position
-	if is_authority():
-		$NetworkData.puppet_hand_positions.append(hand.global_position)
-		$NetworkData.puppet_hand_rotations.append(hand.global_rotation)
-	is_ready = true
+#	if is_authority():
+#		$NetworkData.puppet_hand_positions.append(hand.global_position)
+#		$NetworkData.puppet_hand_rotations.append(hand.global_rotation)
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -76,9 +73,6 @@ func _physics_process(delta: float) -> void:
 		position = $NetworkData.puppet_position
 		rotation = $NetworkData.puppet_rotation
 		move_and_slide()
-		for i in $NetworkData.puppet_hand_positions.size():
-			hands[i].global_position = $NetworkData.puppet_hand_positions[i]
-			hands[i].global_rotation = $NetworkData.puppet_hand_rotations[i]
 		return
 	
 	if not WorldManager.is_spawn_chunk_generated():
@@ -103,11 +97,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1))
 		velocity.z = move_toward(velocity.z, 0, SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1))
 	
-	if is_ready:
-		update_hands()
-		for i in $NetworkData.puppet_hand_positions.size():
-			$NetworkData.puppet_hand_positions[i] = hands[i].global_position
-			$NetworkData.puppet_hand_rotations[i] = hands[i].global_rotation
+	update_hands()
 	move_and_slide()
 	$NetworkData.puppet_velocity = velocity
 	$NetworkData.puppet_position = position
@@ -132,6 +122,11 @@ func _physics_process(delta: float) -> void:
 
 func update_hands() -> void:
 	for arm in arms:
+		if hands.size() <= arm.get_meta("hand_index"):
+			var get_hand: Node = get_node_or_null("../" + str($NetworkData.get_multiplayer_authority()) + "Hand" + str(arm.get_meta("hand_index")))
+			if get_hand:
+				hands.push_back(get_hand)
+			continue
 		var hand: Node3D = hands[arm.get_meta("hand_index")]
 		var destination: Vector3 = arm.get_node("HandDestination").global_position
 		hand.velocity = hand.global_position.direction_to(destination) * hand.global_position.distance_to(destination) * 60
@@ -250,11 +245,12 @@ func toggle_grab(hand_index: int, grab_mode: GRAB_MODE = GRAB_MODE.GRAB_OR_DROP)
 				body.collision_layer = 1
 				body.collision_mask = 1
 			rpc_id(1, "grab_item", body.get_path(), hand_index, true)
-			#break
 
 @rpc("any_peer", "call_local")
 func grab_item(item_path, hand_index, is_grab: bool = true):
-	var hand = hands[hand_index]
+	var hand = get_node_or_null("../" + str($NetworkData.get_multiplayer_authority()) + "Hand" + str(hand_index))
+	if not hand:
+		return
 	if is_grab:
 		var item = get_node(item_path)
 		hand.get_node("Generic6DOFJoint3D").node_b = item_path
