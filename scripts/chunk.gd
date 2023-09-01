@@ -74,10 +74,10 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 	]
 	
 	var base_uvs: Array[Vector2] = [
-		Vector2(0.5, 1.0), # 0
-		Vector2(1.0, 0.5), # 1
-		Vector2(0.5, 0.0), # 2
-		Vector2(0.0, 0.5), # 3
+		Vector2(0, 1.0), # 0
+		Vector2(1.0, 0), # 1
+		Vector2(0, 0.0), # 2
+		Vector2(0.0, 0), # 3
 		Vector2(0.5, 1.0), # 4
 		Vector2(1.0, 0.5), # 5
 		Vector2(0.5, 0.0), # 6
@@ -132,9 +132,15 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 						eval_voxels(corners[3], corners[7]), # 10
 						eval_voxels(corners[2], corners[6]), # 11
 					]
+				var uv_index = 0
 				for index in IndexMap.index_map[id]:
 					vertices.push_back(Vector3(x_loop, y_loop, z_loop) + base_verts[index] - offset_mul[index] * 0.5 + offset_mul[index] * edge_vertices[index])
-					uvs.push_back(base_uvs[index])
+					
+					uvs.push_back(base_uvs[uv_index + 0])
+					uv_index += 1
+					uv_index %= 3
+					
+					#uvs.push_back(base_uvs[index])
 #					normals.push_back(Vector3.UP)
 	
 	var mesh: ConcavePolygonShape3D = ConcavePolygonShape3D.new()
