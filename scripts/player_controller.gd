@@ -25,6 +25,8 @@ var hands: Array = []
 var flying: bool = false
 
 @onready var chatbox: LineEdit = get_tree().current_scene.get_node("ChatUI/ChatBox")
+@onready var chat_history: RichTextLabel = get_tree().current_scene.get_node("ChatUI/Chat")
+@onready var chat_timer: Timer = get_tree().current_scene.get_node("ChatUI/Timer")
 
 func is_authority() -> bool:
 	if multiplayer.get_multiplayer_peer().get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
@@ -54,6 +56,7 @@ func _ready() -> void:
 	arms[0].set_meta("MirrorInMirrorMode", not left_handed)
 	arms[1].set_meta("MirrorInMirrorMode", left_handed)
 	chatbox.text_submitted.connect(chat_submit)
+	chat_timer.timeout.connect(hide_chat)
 
 func make_hand(arm, hand_index):
 	if not multiplayer.get_unique_id() == 1:
@@ -82,7 +85,9 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if Input.is_action_just_pressed("chat") and not chatbox.visible and not handling_chat:
-		chatbox.visible = not chatbox.visible
+		chatbox.visible = true
+		chat_history.visible = true
+		chat_timer.stop()
 		chatbox.grab_focus()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if chatbox.visible else Input.MOUSE_MODE_CAPTURED
 	
@@ -294,13 +299,26 @@ func chat_submit(chat: String):
 	chatbox.clear()
 	chatbox.visible = false
 	handling_chat = true
+	chat_timer.start(5)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if chat.length() == 0:
 		return
 	if chat[0] == "/":
 		handle_command(chat.substr(1))
 	else:
-		print(chat)
+		rpc("chat_said", chat)
+		#chat_history.append_text("<Player" + str(multiplayer.get_unique_id()) + "> " + chat + "\n")
+		#chat_history.visible = true
+
+@rpc("call_local", "any_peer")
+func chat_said(chat: String):
+	chat_history.append_text("<Player" + str($NetworkData.get_multiplayer_authority()) + "> " + chat + "\n")
+	chat_history.visible = true
+	if not chatbox.visible:
+		chat_timer.start(5)
+
+func hide_chat():
+	chat_history.visible = false
 
 func handle_command(command: String):
 	var parameters := command.split(" ", false)

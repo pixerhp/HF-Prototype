@@ -1,9 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://1kvwgihomkc7"]
+[gd_scene load_steps=11 format=3 uid="uid://1kvwgihomkc7"]
 
 [ext_resource type="StyleBox" uid="uid://cks2su2mb6q4t" path="res://style_box.tres" id="4_bt4mb"]
 [ext_resource type="StyleBox" uid="uid://cfbxtg7am8uvk" path="res://focus_style_box_flat.tres" id="5_yjtdm"]
 [ext_resource type="StyleBox" uid="uid://d4mirw6xitiuj" path="res://hover_style_box_flat.tres" id="6_rib3e"]
 [ext_resource type="StyleBox" uid="uid://bf8hvtjd0n21p" path="res://clicked_style_box.tres" id="7_bobtk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qxbv5"]
+bg_color = Color(0, 0, 0, 0.784314)
+corner_radius_top_right = 25
 
 [sub_resource type="Gradient" id="Gradient_wck6y"]
 offsets = PackedFloat32Array(0, 0.990654)
@@ -96,6 +100,20 @@ anchor_bottom = 1.0
 offset_top = -31.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="Chat" type="RichTextLabel" parent="ChatUI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -33.0
+offset_right = 1152.0
+offset_bottom = -33.0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_qxbv5")
+bbcode_enabled = true
+fit_content = true
+
+[node name="Timer" type="Timer" parent="ChatUI"]
 
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
 
