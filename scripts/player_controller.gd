@@ -23,6 +23,8 @@ var spawn_point: Vector3 = Vector3(0, 50, 0)
 var hands: Array = []
 
 var flying: bool = false
+var was_on_floor: bool = false
+var previous_velocity: Vector3 = Vector3.ZERO
 
 @onready var chatbox: LineEdit = get_tree().current_scene.get_node("ChatUI/ChatBox")
 @onready var chat_history: RichTextLabel = get_tree().current_scene.get_node("ChatUI/Chat")
@@ -36,6 +38,8 @@ func is_authority() -> bool:
 func _enter_tree():
 	$NetworkData.set_multiplayer_authority(str(name).to_int())
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	if is_authority():
+		$NetworkData.username = get_tree().current_scene.get_node("MenuCanvas/NetworkMenu/VBoxContainer/Username").text
 	#set_multiplayer_authority(str(name).to_int())
 
 func _ready() -> void:
@@ -48,7 +52,12 @@ func _ready() -> void:
 	
 	if not is_authority():
 		$MeshInstance3D.visible = true
+		$Camera3D/Head.visible = true
+		await $MultiplayerSynchronizer.synchronized
+		$Nametag.text = $NetworkData.username
 		return
+	$Nametag.text = $NetworkData.username
+	rpc("chat_said", $NetworkData.username + " joined.", false)
 	
 	$Camera3D.current = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -123,6 +132,12 @@ func _physics_process(delta: float) -> void:
 	
 	update_hands()
 	move_and_slide()
+	
+	if not was_on_floor and is_on_floor() and previous_velocity.y <= -15:
+		rpc("chat_said", $NetworkData.username + " fractured their hip.", false)
+	was_on_floor = is_on_floor()
+	previous_velocity = velocity
+	
 	$NetworkData.puppet_velocity = velocity
 	$NetworkData.puppet_position = position
 	$NetworkData.puppet_rotation = rotation
@@ -140,9 +155,11 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("toggle_ui"):
 		$"../../MenuCanvas".visible = not $"../../MenuCanvas".visible
+		$"../../GameUI".visible = not $"../../GameUI".visible
 	
 	$"../../StatsCanvas/Coordinates".text = str(Vector3i(global_position))
 	$"../../StatsCanvas/Speedometer".text = str(int(velocity.length())) + " speed"
+	
 
 func update_hands() -> void:
 	for arm in arms:
@@ -234,7 +251,7 @@ func move_arm_hand_unit(arm: Node3D, movement: Vector3):
 	var camera_drag_amount: Vector2 = Vector2.ZERO
 	arm.rotation.y += movement.x * (-1 if mirror_mode and arm.get_meta("MirrorInMirrorMode") else 1)
 	
-	var range_limit = 65
+	var range_limit = 75
 	
 	camera_drag_amount.x = arm.rotation.x - clamp(arm.rotation.x, deg_to_rad(-range_limit), deg_to_rad(range_limit))
 	camera_drag_amount.y = arm.rotation.y - clamp(arm.rotation.y, deg_to_rad(-range_limit), deg_to_rad(range_limit))
@@ -306,13 +323,14 @@ func chat_submit(chat: String):
 	if chat[0] == "/":
 		handle_command(chat.substr(1))
 	else:
-		rpc("chat_said", chat)
-		#chat_history.append_text("<Player" + str(multiplayer.get_unique_id()) + "> " + chat + "\n")
-		#chat_history.visible = true
+		rpc("chat_said", chat, true)
 
 @rpc("call_local", "any_peer")
-func chat_said(chat: String):
-	chat_history.append_text("<Player" + str($NetworkData.get_multiplayer_authority()) + "> " + chat + "\n")
+func chat_said(chat: String, show_id: bool = false):
+	if show_id:
+		chat_history.append_text("<" + $NetworkData.username + "> " + chat + "\n")
+	else:
+		chat_history.append_text(chat + "\n")
 	chat_history.visible = true
 	if not chatbox.visible:
 		chat_timer.start(5)
@@ -336,4 +354,3 @@ func handle_command(command: String):
 		rotation = Vector3.ZERO
 	if parameters[0] == "fly":
 		flying = not flying
-		print(flying)

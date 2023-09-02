@@ -31,6 +31,7 @@ background_mode = 2
 sky = SubResource("Sky_iwc4w")
 ambient_light_sky_contribution = 0.1
 tonemap_mode = 2
+ssao_enabled = true
 
 [node name="World" type="Node3D"]
 
@@ -148,12 +149,21 @@ offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Username" type="LineEdit" parent="MenuCanvas/NetworkMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("4_bt4mb")
+theme_override_styles/focus = ExtResource("5_yjtdm")
+text = "Player"
+placeholder_text = "Username"
+alignment = 1
+
 [node name="IP" type="LineEdit" parent="MenuCanvas/NetworkMenu/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/normal = ExtResource("4_bt4mb")
 theme_override_styles/focus = ExtResource("5_yjtdm")
 text = "127.0.0.1"
 placeholder_text = "IP Address"
+alignment = 1
 
 [node name="HostButton" type="Button" parent="MenuCanvas/NetworkMenu/VBoxContainer"]
 layout_mode = 2

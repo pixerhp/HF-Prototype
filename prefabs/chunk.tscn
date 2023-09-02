@@ -7,8 +7,6 @@
 noise_type = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wqlx2"]
-transparency = 1
-depth_draw_mode = 1
 albedo_texture = ExtResource("2_b7l4g")
 metallic_specular = 0.0
 texture_filter = 2
@@ -23,3 +21,4 @@ noise = SubResource("FastNoiseLite_1s3gs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_wqlx2")
+cast_shadow = 2

@@ -1,10 +1,39 @@
-[gd_scene load_steps=7 format=3 uid="uid://3mxgjucv2auv"]
+[gd_scene load_steps=14 format=3 uid="uid://3mxgjucv2auv"]
 
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_luo61"]
 [ext_resource type="PackedScene" uid="uid://b8x7cffwumk6c" path="res://prefabs/arm.tscn" id="3_0uh66"]
 [ext_resource type="Script" path="res://scripts/network_data.gd" id="3_j08hf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evr2n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwta8"]
+albedo_color = Color(0, 0, 0, 1)
+metallic = 0.75
+
+[sub_resource type="BoxMesh" id="BoxMesh_2vw6v"]
+size = Vector3(0.5, 0.5, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8fha"]
+albedo_color = Color(0, 0, 0, 1)
+metallic = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ncfmh"]
+top_radius = 0.25
+bottom_radius = 0.0
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x6mia"]
+albedo_color = Color(0.278431, 0.278431, 0.278431, 1)
+metallic = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_17l3c"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6pqbi"]
+albedo_color = Color(0.278431, 0.278431, 0.278431, 1)
+metallic = 0.75
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xfjnf"]
 properties/0/path = NodePath(".:puppet_position")
@@ -27,8 +56,17 @@ properties/4/path = NodePath(".:puppet_hand_rotations")
 properties/4/spawn = true
 properties/4/sync = true
 properties/4/watch = false
+properties/5/path = NodePath(".:username")
+properties/5/spawn = true
+properties/5/sync = true
+properties/5/watch = false
+properties/6/path = NodePath("../Camera3D:rotation")
+properties/6/spawn = true
+properties/6/sync = true
+properties/6/watch = false
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_em6tn"]
+height = 1.25
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
@@ -51,6 +89,30 @@ metadata/MainAction = "left_click"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 0)
 metadata/MainAction = "right_click"
 
+[node name="Head" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1)
+visible = false
+material_override = SubResource("StandardMaterial3D_mwta8")
+mesh = SubResource("BoxMesh_2vw6v")
+
+[node name="Head2" type="MeshInstance3D" parent="Camera3D/Head"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.393111)
+material_override = SubResource("StandardMaterial3D_s8fha")
+mesh = SubResource("CylinderMesh_ncfmh")
+skeleton = NodePath("../..")
+
+[node name="Head3" type="MeshInstance3D" parent="Camera3D/Head"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.377, 0.221381)
+material_override = SubResource("StandardMaterial3D_x6mia")
+mesh = SubResource("CylinderMesh_17l3c")
+skeleton = NodePath("../..")
+
+[node name="Head4" type="MeshInstance3D" parent="Camera3D/Head"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.376893, -0.18311)
+material_override = SubResource("StandardMaterial3D_6pqbi")
+mesh = SubResource("CylinderMesh_17l3c")
+skeleton = NodePath("../..")
+
 [node name="NetworkData" type="Node" parent="."]
 script = ExtResource("3_j08hf")
 
@@ -61,5 +123,11 @@ delta_interval = 0.05
 replication_config = SubResource("SceneReplicationConfig_xfjnf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.375, 0)
 visible = false
 mesh = SubResource("CapsuleMesh_em6tn")
+
+[node name="Nametag" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+billboard = 1
+text = "Player"
