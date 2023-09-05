@@ -18,7 +18,7 @@ config/icon="res://textures/texture_a.png"
 
 [autoload]
 
-IndexMap="*res://scripts/index_map.gd"
+ChunkGenTools="*res://scripts/chunk_gen_tools.gd"
 WorldManager="*res://scripts/world_manager.gd"
 NetworkHandler="*res://scripts/network_handler.gd"
 

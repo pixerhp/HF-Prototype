@@ -1,5 +1,31 @@
 extends Node
 
+var atlas: ImageTexture = ImageTexture.new()
+var texture_count: int = 0
+
+func _init():
+	var atlas_image: Image
+	var images: Array[Image] = []
+	var max_height: int = 0
+	var max_width: int = 0
+	for file in DirAccess.open("res://textures/").get_files():
+		if not file.ends_with(".png"):
+			continue
+		var image: Image = load("res://textures/" + file).get_image()
+		if image.is_compressed():
+			image.decompress()
+		image.convert(Image.FORMAT_RGBA8)
+		images.append(image)
+		max_height = max(max_height, image.get_height())
+		max_width = max(max_width, image.get_width())
+	texture_count = images.size()
+	atlas_image = Image.create(max_width * texture_count, max_height, false, Image.FORMAT_RGBA8)
+	atlas_image.fill(Color.BLACK)
+	for image_index in range(images.size()):
+		var image: Image = images[image_index]
+		atlas_image.blit_rect(image, Rect2i(0, 0, image.get_width(), image.get_height()), Vector2i(max_height * image_index, 0))
+	atlas.set_image(atlas_image)
+
 # https://gist.github.com/dwilliamson/c041e3454a713e58baf6e4f8e5fffecd
 
 var index_map: Array[Array] = [

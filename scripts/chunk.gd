@@ -9,6 +9,7 @@ var chunk_position: Vector3 = Vector3.ZERO
 
 func _enter_tree() -> void:
 	position = chunk_position * CHUNK_SIZE
+	$MeshInstance3D.material_override.albedo_texture = ChunkGenTools.atlas
 
 func ground_level_at(x, z) -> float:
 	return abs(noise.get_noise_2d(x, z)) * 20
@@ -48,7 +49,6 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 	
 	var vertices: PackedVector3Array = PackedVector3Array()
 	var uvs: PackedVector2Array = PackedVector2Array()
-#	var normals: PackedVector3Array = PackedVector3Array()
 	var offset_mul: Array[Vector3] = [
 		Vector3.RIGHT, # 0
 		Vector3.UP, # 1
@@ -103,6 +103,9 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 			layer_y.append(layer_z)
 		data.append(layer_y)
 	
+	var mat_rng = RandomNumberGenerator.new()
+	mat_rng.seed = s + chunk_pos.x + chunk_pos.y * 100 + chunk_pos.z * 10000
+	
 	for x_loop in range(0, CHUNK_SIZE, 1):
 		for y_loop in range(0, CHUNK_SIZE, 1):
 			var prev_layer: Array[float] = [data[x_loop][y_loop][0], data[x_loop + 1][y_loop][0], data[x_loop][y_loop + 1][0], data[x_loop + 1][y_loop + 1][0]]
@@ -118,7 +121,7 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 				for i in range(corners.size()):
 					id = id | (int(not abs(corners[i]) > THRESHOLD) << i)
 				var edge_vertices: Array[float]
-				if IndexMap.index_map[id].size() != 0:
+				if ChunkGenTools.index_map[id].size() != 0:
 					edge_vertices = [
 						eval_voxels(corners[0], corners[1]), # 0
 						eval_voxels(corners[1], corners[3]), # 1
@@ -133,16 +136,16 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 						eval_voxels(corners[3], corners[7]), # 10
 						eval_voxels(corners[2], corners[6]), # 11
 					]
+				
+				var material_id: int = mat_rng.randi_range(0, ChunkGenTools.texture_count - 1)
 				var uv_index = 0
-				for index in IndexMap.index_map[id]:
+				for index in ChunkGenTools.index_map[id]:
 					vertices.push_back(Vector3(x_loop, y_loop, z_loop) + base_verts[index] - offset_mul[index] * 0.5 + offset_mul[index] * edge_vertices[index])
 					
-					uvs.push_back(base_uvs[uv_index + 0])
+					var offset: Vector2 = Vector2(material_id, 0) / Vector2(ChunkGenTools.texture_count, 1)
+					uvs.push_back(base_uvs[uv_index + 0] / Vector2(ChunkGenTools.texture_count, 1) + offset)
 					uv_index += 1
 					uv_index %= 6
-					
-					#uvs.push_back(base_uvs[index])
-#					normals.push_back(Vector3.UP)
 	
 	var mesh: ConcavePolygonShape3D = ConcavePolygonShape3D.new()
 	mesh.set_faces(vertices)
@@ -156,7 +159,6 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = vertices
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
-#	arrays[Mesh.ARRAY_NORMAL] = normals
 
 	# Create the Mesh.
 	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
