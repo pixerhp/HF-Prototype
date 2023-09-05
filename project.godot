@@ -18,10 +18,10 @@ config/icon="res://textures/texture_a.png"
 
 [autoload]
 
-ChunkGenTools="*res://scripts/chunk_gen_tools.gd"
-WorldManager="*res://scripts/world_manager.gd"
-NetworkHandler="*res://scripts/network_handler.gd"
-GlobalStuff="*res://scripts/global_stuff.gd"
+ChunkGenTools="*res://scripts/autoloaded_scripts/chunk_gen_tools.gd"
+WorldManager="*res://scripts/autoloaded_scripts/world_manager.gd"
+NetworkHandler="*res://scripts/autoloaded_scripts/network_handler.gd"
+GlobalStuff="*res://scripts/autoloaded_scripts/global_stuff.gd"
 
 [input]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c3t5brhy484yq"]
 
 [ext_resource type="Texture2D" uid="uid://co8pd38rb8874" path="res://textures/ladder_brassish_side.png" id="1_as2yr"]
-[ext_resource type="Script" path="res://scripts/hand.gd" id="1_hnwrn"]
+[ext_resource type="Script" path="res://scripts/general_scripts/hand.gd" id="1_sra3t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qabtq"]
 size = Vector3(0.25, 0.1, 0.25)
@@ -30,7 +30,7 @@ properties/1/watch = false
 
 [node name="Hand" type="CharacterBody3D" groups=["hand"]]
 motion_mode = 1
-script = ExtResource("1_hnwrn")
+script = ExtResource("1_sra3t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_qabtq")

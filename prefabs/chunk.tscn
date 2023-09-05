@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfmj1cxhigt85"]
 
-[ext_resource type="Script" path="res://scripts/chunk.gd" id="1_i5d24"]
+[ext_resource type="Script" path="res://scripts/general_scripts/chunk.gd" id="1_i5d24"]
 [ext_resource type="Texture2D" uid="uid://wvs2xq0g65b5" path="res://textures/dirt_default.png" id="2_b7l4g"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1s3gs"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://3mxgjucv2auv"]
 
-[ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_luo61"]
+[ext_resource type="Script" path="res://scripts/general_scripts/player_controller.gd" id="1_luo61"]
 [ext_resource type="PackedScene" uid="uid://b8x7cffwumk6c" path="res://prefabs/arm.tscn" id="3_0uh66"]
-[ext_resource type="Script" path="res://scripts/network_data.gd" id="3_j08hf"]
+[ext_resource type="Script" path="res://scripts/general_scripts/network_data.gd" id="3_j08hf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evr2n"]
 
