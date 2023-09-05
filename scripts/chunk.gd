@@ -15,8 +15,8 @@ func ground_level_at(x, z) -> float:
 	return abs(noise.get_noise_2d(x, z)) * 20
 
 func get_value_at(x, y, z) -> float:
-	var d: int = 2
-	
+#	var d: int = 2
+#
 #	if x < d and x > -d and y < 44 + d * 2 and y > 44 and z < d and z > -d:
 #		return 1.0
 #	if Vector3i(x, y, z) == Vector3i(8, 44, 8):
