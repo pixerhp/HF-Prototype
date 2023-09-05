@@ -137,7 +137,28 @@ func generate_world(chunk_pos: Vector3i = Vector3i.ZERO, s: int = 5) -> void:
 						eval_voxels(corners[2], corners[6]), # 11
 					]
 				
-				var material_id: int = mat_rng.randi_range(0, ChunkGenTools.texture_count - 1)
+#				var material_id: int = mat_rng.randi_range(0, ChunkGenTools.texture_count - 1)
+				const layer_data: Array[int] = [
+					6, 6,
+					5, 5, 5, 5,
+					7, 7,
+					15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+					15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+					15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+					11, 11, 11, 11, 11, 11, 11, 11,
+					11, 11, 11, 11, 11, 11, 11, 11,
+					11, 11, 11, 11, 11, 11, 11, 11,
+					11, 11, 11, 11, 11, 11, 11, 11,
+					11, 11, 11, 11, 11, 11, 11, 11,
+					19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 
+					19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 
+					19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 
+					19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 
+					20,
+				]
+				var layer: int = (ground_level_at(x_loop, z_loop) + 35) - (chunk_position.y * CHUNK_SIZE + y_loop)
+				layer = max(min(layer, layer_data.size() - 1), 0)
+				var material_id: int = layer_data[layer]
 				var uv_index = 0
 				for index in ChunkGenTools.index_map[id]:
 					vertices.push_back(Vector3(x_loop, y_loop, z_loop) + base_verts[index] - offset_mul[index] * 0.5 + offset_mul[index] * edge_vertices[index])

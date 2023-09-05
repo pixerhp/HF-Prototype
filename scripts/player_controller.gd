@@ -270,7 +270,7 @@ func is_empty_hand(hand) -> bool:
 	return hand.get_node("Generic6DOFJoint3D").node_b.is_empty()
 
 func toggle_grab(hand_index: int, grab_mode: GRAB_MODE = GRAB_MODE.GRAB_OR_DROP):
-	var hand: Node3D= hands[hand_index]
+	var hand: Node3D = hands[hand_index]
 	if grab_mode == GRAB_MODE.ONLY_DROP or (grab_mode == GRAB_MODE.GRAB_OR_DROP and not is_empty_hand(hand)):
 		if not is_empty_hand(hand) and get_node(hand.get_node("Generic6DOFJoint3D").node_b) is RigidBody3D:
 			get_node(hand.get_node("Generic6DOFJoint3D").node_b).gravity_scale = 1
