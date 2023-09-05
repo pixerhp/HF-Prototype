@@ -100,9 +100,6 @@ func _physics_process(delta: float) -> void:
 		chatbox.grab_focus()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if chatbox.visible else Input.MOUSE_MODE_CAPTURED
 	
-	if chatbox.visible:
-		return
-	
 	handling_chat = false
 	
 	if not WorldManager.is_spawn_chunk_generated():
@@ -111,21 +108,24 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor() and not flying:
 		velocity.y -= gravity * delta
-
-	# Handle Jump.
-	if Input.is_action_pressed("jump") and is_on_floor() and not flying:
-		velocity.y = JUMP_VELOCITY
 	
-	if flying:
-		velocity.y = SPEED * Input.get_axis("lower", "jump")
+	if not chatbox.visible:
+		# Handle Jump.
+		if Input.is_action_pressed("jump") and is_on_floor() and not flying:
+			velocity.y = JUMP_VELOCITY
+		
+		if flying:
+			velocity.y = SPEED * Input.get_axis("lower", "jump")
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("left", "right", "forward", "backward")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1)
-		velocity.z = direction.z * SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1)
+		# Get the input direction and handle the movement/deceleration.
+		var input_dir := Input.get_vector("left", "right", "forward", "backward")
+		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if direction:
+			velocity.x = direction.x * SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1)
+			velocity.z = direction.z * SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1)
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1))
+			velocity.z = move_toward(velocity.z, 0, SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1))
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1))
 		velocity.z = move_toward(velocity.z, 0, SPEED * (SPRINT_MULTIPLIER if Input.is_action_pressed("sprint") else 1))
