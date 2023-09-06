@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="HF Proto. v14"
+config/name="HF Proto"
 config/description="A gameplay and terrain oriented prototype for a game named \"Hatchetflair\"."
 run/main_scene="res://world.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
