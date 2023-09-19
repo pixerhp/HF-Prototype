@@ -29,9 +29,16 @@ sky_material = SubResource("ProceduralSkyMaterial_d063o")
 [sub_resource type="Environment" id="Environment_8a6fv"]
 background_mode = 2
 sky = SubResource("Sky_iwc4w")
+ambient_light_source = 2
 ambient_light_sky_contribution = 0.1
 tonemap_mode = 2
 ssao_enabled = true
+fog_enabled = true
+fog_sun_scatter = 0.15
+fog_density = 0.02
+fog_sky_affect = 0.5
+fog_height = -88.0
+fog_height_density = 0.8
 
 [node name="World" type="Node3D"]
 
