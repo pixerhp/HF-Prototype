@@ -28,7 +28,7 @@ func _init():
 
 # https://gist.github.com/dwilliamson/c041e3454a713e58baf6e4f8e5fffecd
 
-var index_map: Array[Array] = [
+const index_map: Array[Array] = [
 	[],
 	[0, 3, 8],
 	[0, 9, 1],
