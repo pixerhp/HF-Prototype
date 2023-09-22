@@ -3,21 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b8kp7q6263u7q"
-path.s3tc="res://.godot/imported/asremic1.png-791d2c7412cd273d5e1e5624eb89965b.s3tc.ctex"
-path.etc2="res://.godot/imported/asremic1.png-791d2c7412cd273d5e1e5624eb89965b.etc2.ctex"
+path="res://.godot/imported/asremic1.png-791d2c7412cd273d5e1e5624eb89965b.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://textures/asremic1.png"
-dest_files=["res://.godot/imported/asremic1.png-791d2c7412cd273d5e1e5624eb89965b.s3tc.ctex", "res://.godot/imported/asremic1.png-791d2c7412cd273d5e1e5624eb89965b.etc2.ctex"]
+dest_files=["res://.godot/imported/asremic1.png-791d2c7412cd273d5e1e5624eb89965b.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

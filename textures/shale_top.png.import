@@ -3,21 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://m1udfhbw35i7"
-path.s3tc="res://.godot/imported/shale_top.png-47f457975a861606e76f1b3e6571e6dc.s3tc.ctex"
-path.etc2="res://.godot/imported/shale_top.png-47f457975a861606e76f1b3e6571e6dc.etc2.ctex"
+path="res://.godot/imported/shale_top.png-47f457975a861606e76f1b3e6571e6dc.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://textures/shale_top.png"
-dest_files=["res://.godot/imported/shale_top.png-47f457975a861606e76f1b3e6571e6dc.s3tc.ctex", "res://.godot/imported/shale_top.png-47f457975a861606e76f1b3e6571e6dc.etc2.ctex"]
+dest_files=["res://.godot/imported/shale_top.png-47f457975a861606e76f1b3e6571e6dc.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
