@@ -1,7 +1,7 @@
 extends Node
 
 var player_prefab: PackedScene = preload("res://prefabs/player.tscn")
-@onready var networked_objects_holder: Node = get_tree().current_scene.get_node("NetworkObjects")
+@onready var networked_objects_holder: Node = get_tree().current_scene.get_node("MultiplayerSpawner")
 @onready var network_menu: Node = get_tree().current_scene.get_node("MenuCanvas/NetworkMenu")
 @onready var version_label: Label = get_tree().current_scene.get_node("MenuCanvas/VersionLabel")
 

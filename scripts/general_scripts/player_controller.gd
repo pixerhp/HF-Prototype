@@ -157,8 +157,8 @@ func _physics_process(delta: float) -> void:
 		$"../../MenuCanvas".visible = not $"../../MenuCanvas".visible
 		$"../../GameUI".visible = not $"../../GameUI".visible
 	
-	$"../../StatsCanvas/Coordinates".text = str(Vector3i(global_position))
-	$"../../StatsCanvas/Speedometer".text = str(int(velocity.length())) + " speed"
+	#$"../../StatsCanvas/Coordinates".text = str(Vector3i(global_position))
+	#$"../../StatsCanvas/Speedometer".text = str(int(velocity.length())) + " speed"
 	
 
 func update_hands() -> void:

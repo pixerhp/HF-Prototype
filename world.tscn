@@ -5,10 +5,6 @@
 [ext_resource type="StyleBox" uid="uid://d4mirw6xitiuj" path="res://hover_style_box_flat.tres" id="6_rib3e"]
 [ext_resource type="StyleBox" uid="uid://bf8hvtjd0n21p" path="res://clicked_style_box.tres" id="7_bobtk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qxbv5"]
-bg_color = Color(0, 0, 0, 0.784314)
-corner_radius_top_right = 25
-
 [sub_resource type="Gradient" id="Gradient_wck6y"]
 offsets = PackedFloat32Array(0, 0.990654)
 colors = PackedColorArray(0.529067, 0.529067, 0.529067, 1, 0.414704, 0.414704, 0.414704, 1)
@@ -19,9 +15,15 @@ width = 256
 height = 256
 fill_to = Vector2(1, 0.549858)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qxbv5"]
+bg_color = Color(0, 0, 0, 0.784314)
+corner_radius_top_right = 25
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d063o"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+sky_top_color = Color(0.580392, 0.615686, 0.666667, 1)
+sky_horizon_color = Color(0.517647, 0.552941, 0.607843, 1)
+ground_bottom_color = Color(0.454902, 0.490196, 0.541176, 1)
+ground_horizon_color = Color(0.517647, 0.552941, 0.607843, 1)
 
 [sub_resource type="Sky" id="Sky_iwc4w"]
 sky_material = SubResource("ProceduralSkyMaterial_d063o")
@@ -34,6 +36,7 @@ ambient_light_sky_contribution = 0.1
 tonemap_mode = 2
 ssao_enabled = true
 fog_enabled = true
+fog_light_color = Color(0.517647, 0.552941, 0.607843, 1)
 fog_sun_scatter = 0.15
 fog_density = 0.02
 fog_sky_affect = 0.5
@@ -41,87 +44,6 @@ fog_height = -88.0
 fog_height_density = 0.8
 
 [node name="World" type="Node3D"]
-
-[node name="StatsCanvas" type="CanvasLayer" parent="."]
-
-[node name="Coordinates" type="Label" parent="StatsCanvas"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -96.0
-offset_right = 88.0
-offset_bottom = -66.0
-grow_vertical = 0
-theme_override_styles/normal = ExtResource("4_bt4mb")
-text = "(0, 0, 0)"
-horizontal_alignment = 1
-
-[node name="Speedometer" type="Label" parent="StatsCanvas"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -52.0
-offset_right = 67.0
-offset_bottom = -26.0
-grow_vertical = 0
-theme_override_styles/normal = ExtResource("4_bt4mb")
-text = "0 speed"
-
-[node name="GameUI" type="CanvasLayer" parent="."]
-
-[node name="ControlsHints" type="Label" parent="GameUI"]
-offset_right = 461.0
-offset_bottom = 286.0
-text = "WASD to move
-Shift or Ctrl to sprint
-Hold mouse button left to move left hand
-Hold mouse button right to move right hand
-Scroll to move hand up and down
-Press double click to toggle grabbing
-Press R  to swap Y and Z movement for the hands
-Press the middle mouse button to toggle mirror hand mode
-Press F1 to toggle this menu
-Press F2 to teleport to (0, 50, 0)
-Press F3 to spawn a shovel"
-
-[node name="MirrorLine" type="ColorRect" parent="GameUI"]
-visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -2.0
-offset_right = 2.0
-offset_bottom = 8000.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 1)
-
-[node name="ChatUI" type="CanvasLayer" parent="."]
-
-[node name="ChatBox" type="LineEdit" parent="ChatUI"]
-visible = false
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Chat" type="RichTextLabel" parent="ChatUI"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -33.0
-offset_right = 1152.0
-offset_bottom = -33.0
-grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_qxbv5")
-bbcode_enabled = true
-fit_content = true
-
-[node name="Timer" type="Timer" parent="ChatUI"]
 
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
 
@@ -208,6 +130,87 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Unknown version"
 
+[node name="StatsCanvas" type="CanvasLayer" parent="."]
+
+[node name="Coordinates" type="Label" parent="StatsCanvas"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -96.0
+offset_right = 88.0
+offset_bottom = -66.0
+grow_vertical = 0
+theme_override_styles/normal = ExtResource("4_bt4mb")
+text = "(0, 0, 0)"
+horizontal_alignment = 1
+
+[node name="Speedometer" type="Label" parent="StatsCanvas"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -52.0
+offset_right = 67.0
+offset_bottom = -26.0
+grow_vertical = 0
+theme_override_styles/normal = ExtResource("4_bt4mb")
+text = "0 speed"
+
+[node name="GameUI" type="CanvasLayer" parent="."]
+
+[node name="ControlsHints" type="Label" parent="GameUI"]
+offset_right = 461.0
+offset_bottom = 286.0
+text = "WASD to move
+Shift or Ctrl to sprint
+Hold mouse button left to move left hand
+Hold mouse button right to move right hand
+Scroll to move hand up and down
+Press double click to toggle grabbing
+Press R  to swap Y and Z movement for the hands
+Press the middle mouse button to toggle mirror hand mode
+Press F1 to toggle this menu
+Press F2 to teleport to (0, 50, 0)
+Press F3 to spawn a shovel"
+
+[node name="MirrorLine" type="ColorRect" parent="GameUI"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2.0
+offset_right = 2.0
+offset_bottom = 8000.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ChatUI" type="CanvasLayer" parent="."]
+
+[node name="ChatBox" type="LineEdit" parent="ChatUI"]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Chat" type="RichTextLabel" parent="ChatUI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -33.0
+offset_right = 1152.0
+offset_bottom = -33.0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_qxbv5")
+bbcode_enabled = true
+fit_content = true
+
+[node name="Timer" type="Timer" parent="ChatUI"]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8a6fv")
 
@@ -222,7 +225,4 @@ transform = Transform3D(-0.941272, -0.309138, -0.1358, -0.325084, 0.721011, 0.61
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://prefabs/player.tscn", "res://prefabs/shovel.tscn", "res://prefabs/hand.tscn")
-spawn_path = NodePath("../NetworkObjects")
-
-[node name="NetworkObjects" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+spawn_path = NodePath(".")
