@@ -32,7 +32,7 @@ func _process(_delta: float) -> void:
 			if not chunk_holder.has_node(str(next_chunk)):
 				var new_chunk: Node3D = chunk_prefab.instantiate()
 				new_chunk.name = str(next_chunk)
-				print(new_chunk.name)
+				#print(new_chunk.name)
 				new_chunk.chunk_position = next_chunk
 				chunk_holder.call_deferred("add_child", new_chunk)
 				thread.start(new_chunk.generate_world.bind(next_chunk, world_seed))
