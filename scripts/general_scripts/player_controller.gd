@@ -157,8 +157,14 @@ func _physics_process(delta: float) -> void:
 		$"../../MenuCanvas".visible = not $"../../MenuCanvas".visible
 		$"../../GameUI".visible = not $"../../GameUI".visible
 	
-	#$"../../StatsCanvas/Coordinates".text = str(Vector3i(global_position))
-	#$"../../StatsCanvas/Speedometer".text = str(int(velocity.length())) + " speed"
+	# Update the player coords and speed indicators.
+	$"../../StatsCanvas/Coordinates".text = "Coords (xyz): " + str(Vector3i(global_position))
+	if velocity.length() == float(int(velocity.length())):
+		$"../../StatsCanvas/Speedometer".text = "Speed: " + str(int(velocity.length()))
+	elif velocity.length() < 100_000:
+		$"../../StatsCanvas/Speedometer".text = "Speed: " + str(velocity.length()).substr(0, 7)
+	else:
+		$"../../StatsCanvas/Speedometer".text = "Speed: " + str(velocity.length())
 	
 
 func update_hands() -> void:
