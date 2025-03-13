@@ -4,6 +4,7 @@ var atlas: ImageTexture = ImageTexture.new()
 var texture_count: int = 0
 
 func _init():
+	print("atlas")
 	var atlas_image: Image
 	var images: Array[Image] = []
 	var max_height: int = 0

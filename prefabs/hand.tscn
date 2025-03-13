@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c3t5brhy484yq"]
 
 [ext_resource type="Texture2D" uid="uid://co8pd38rb8874" path="res://textures/ladder_brassish_side.png" id="1_as2yr"]
-[ext_resource type="Script" path="res://scripts/general_scripts/hand.gd" id="1_sra3t"]
+[ext_resource type="Script" uid="uid://npms78kp0qqa" path="res://scripts/general_scripts/hand.gd" id="1_sra3t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qabtq"]
 size = Vector3(0.25, 0.1, 0.25)
@@ -21,12 +21,10 @@ size = Vector3(0.3, 0.2, 0.3)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dbytl"]
 properties/0/path = NodePath(".:global_position")
 properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
+properties/0/replication_mode = 1
 properties/1/path = NodePath(".:global_rotation")
 properties/1/spawn = true
-properties/1/sync = true
-properties/1/watch = false
+properties/1/replication_mode = 1
 
 [node name="Hand" type="CharacterBody3D" groups=["hand"]]
 motion_mode = 1
